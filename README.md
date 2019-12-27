@@ -1,4 +1,4 @@
 # uptime-monitor
 
 
-monitor tool (WIP)
+Simple uptime monitor script (WIP).

@@ -2,8 +2,7 @@
     require_once(__DIR__ . '/monitor.php'); 
 
     $list = array(
-        'Google' => 'https://www.google.nl',
-
+        'Google NL' => 'https://www.google.nl',
     );
 
 ?>
@@ -26,7 +25,7 @@
     <script>
         $('document').ready(function($){
             function runCheck(){
-                $('.pingblock').each(function (i, e) {
+                $('.pingblock').each(function (i) {
                     $("[data-pingblock=" + i + "]").load(location.href + " [data-pingblock-child=" + i + "]");
                     //console.log('refresh block :'+ i +' | '+ new Date().toLocaleString());
                 });
