@@ -50,6 +50,8 @@ class Monitor
 
         if (is_array($list)) {
 
+            $i = 0;
+
             foreach ($list as $title => $url){
 
                 $page   = $this->getPage($url);
