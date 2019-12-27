@@ -41,7 +41,10 @@ class Monitor
 
     }
 
-
+    /**
+     * @param $list
+     * @return string
+     */
     public function build($list)
     {
 
@@ -57,18 +60,33 @@ class Monitor
                 ?>
                 <div class="pingblock" data-pingblock="<?= $i ?>">
                     <div class="pingblock__item <?= $status; ?>"  data-pingblock-child="<?= $i ?>">
-                        <?php
+                         <div class="row">
+                            <div class="col">
+                                <h3><?= $title?></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col bold">URL:</div>
+                            <div class="col"><?= $page['url'];?></div>
+                        </div>
+                        <div class="row">
+                            <div class="col bold">Response:</div>
+                            <div class="col"><?= $page['http_code'];?></div>
+                        </div>
+                        <div class="row">
+                            <div class="col bold">Total Time:</div>
+                            <div class="col"><?= $page['total_time'];?></div>
+                        </div>
+                        <div class="row">
+                            <div class="col bold">Last check:</div>
+                            <div class="col"><?= date('d-m-Y H:i:s');?></div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="togo__bar"><span></span></div>
+                            </div>
+                        </div>
 
-                            echo '<h3>'. $title . '</h3>';
-                            echo 'url: ' . $page['url'];
-                            echo '<br/>';
-                            echo 'response: ' . $page['http_code'];
-                            echo '<br/>';
-                            echo 'total time: ' . $page['total_time'];
-                            echo '<br/>';
-                        ?>
-                        <div class="timestamp"><?= date('d-m-Y H:i:s');?></div>
-                        <div class="togo__bar"><span></span></div>
                     </div>
                 </div>
 

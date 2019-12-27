@@ -3,6 +3,7 @@
 
     $list = array(
         'Google' => 'https://www.google.nl',
+
     );
 
 ?>
@@ -24,28 +25,23 @@
 
     <script>
         $('document').ready(function($){
-
-            $('.pingblock').each(function(i,e){
-
-                setInterval(function(){
-
-                    $("[data-pingblock="+i+"]").load(location.href + " [data-pingblock-child="+i+"]").children('.pingblock__item');
-
-                }, 60000);
-
-            });
-            var stamp = new Date().toLocaleString();
-            stamp;
+            function runCheck(){
+                $('.pingblock').each(function (i, e) {
+                    $("[data-pingblock=" + i + "]").load(location.href + " [data-pingblock-child=" + i + "]");
+                    //console.log('refresh block :'+ i +' | '+ new Date().toLocaleString());
+                });
+            }
+            setInterval(runCheck , 60000);
         });
     </script>
 
 </head>
 <body>
-
-    <?php
-        $block = new Monitor;
-        $block->build($list); 
-    ?>
-
+    <div class="container">
+        <?php
+            $block = new Monitor;
+            $block->build($list);
+        ?>
+    </div>
 </body>
 </html>
