@@ -1,7 +1,8 @@
 <?php
-    require_once(__DIR__ . '/monitor.php'); 
+    require_once(__DIR__ . '/monitor.php');
+    require_once(__DIR__ . '/sites.php');
 
-    $list = array(
+$list = array(
         'Google NL' => 'https://www.google.nl',
     );
 
@@ -40,6 +41,10 @@
         <?php
             $block = new Monitor;
             $block->build($list);
+
+
+        $sites = new Sites;
+        print_r($sites->select());
         ?>
     </div>
 </body>
