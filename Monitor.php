@@ -1,11 +1,16 @@
 <?php
 
+require_once(__DIR__ . '/sites.php');
+require_once(__DIR__ . '/health.php');
+
 class Monitor 
 {
 
     public function __contruct()
     {
+
         $this->build();
+
     }
 
 
@@ -19,8 +24,8 @@ class Monitor
             CURLOPT_ENCODING       => "",       // handle all encodings
             CURLOPT_USERAGENT      => "spider", // who am i
             CURLOPT_AUTOREFERER    => true,     // set referer on redirect
-            CURLOPT_CONNECTTIMEOUT => 60,       // timeout on connect
-            CURLOPT_TIMEOUT        => 60,       // timeout on response
+            CURLOPT_CONNECTTIMEOUT => 0,       // timeout on connect
+            CURLOPT_TIMEOUT        => 0,       // timeout on response
             CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
             CURLOPT_SSL_VERIFYPEER => false     // Disabled SSL Cert checks
         );
@@ -42,62 +47,71 @@ class Monitor
     }
 
     /**
-     * @param $list
-     * @return string
+     * @param $id
+     * @param $title
+     * @param $url
      */
-    public function build($list)
+    public function build($id, $title, $url)
     {
 
-        if (is_array($list)) {
+        if (is_numeric($id)) {
 
-            $i = 0;
+            $page = $this->getPage($url);
+            $status = $page['http_code'] == 200 ? 'status--green' : 'status--red';
+            $stamp = date('d-m-Y H:i:s');;
 
-            foreach ($list as $title => $url){
+            //register status
+            $health = new Health;
+            $health->register($id, $page['http_code'], $stamp);
 
-                $page   = $this->getPage($url);
-                $status = $page['http_code'] == 200 ? 'status--green' : 'status--red';
+            ?>
 
-                ?>
-                <div class="pingblock" data-pingblock="<?= $i ?>">
-                    <div class="pingblock__item <?= $status; ?>"  data-pingblock-child="<?= $i ?>">
-                         <div class="row">
-                            <div class="col">
-                                <h3><?= $title?></h3>
-                            </div>
+            <div class="pingblock" data-id="<?= $id ?>">
+                <div class="pingblock__item <?= $status; ?>">
+                    <div class="row">
+                        <div class="col">
+                            <h3>
+                                <?= $title ?>
+                            </h3>
                         </div>
-                        <div class="row">
-                            <div class="col bold">URL:</div>
-                            <div class="col"><?= $page['url'];?></div>
-                        </div>
-                        <div class="row">
-                            <div class="col bold">Response:</div>
-                            <div class="col"><?= $page['http_code'];?></div>
-                        </div>
-                        <div class="row">
-                            <div class="col bold">Total Time:</div>
-                            <div class="col"><?= $page['total_time'];?></div>
-                        </div>
-                        <div class="row">
-                            <div class="col bold">Last check:</div>
-                            <div class="col"><?= date('d-m-Y H:i:s');?></div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="togo__bar"><span></span></div>
-                            </div>
-                        </div>
-
                     </div>
+                    <div class="row">
+                        <div class="col bold">URL:</div>
+                        <div class="col">
+                            <?= $url; ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col bold">Response:</div>
+                        <div class="col">
+                            <?= $page['http_code']; ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col bold">Total Time:</div>
+                        <div class="col">
+                            <?= $page['total_time']; ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col bold">Last check:</div>
+                        <div class="col">
+                            <?= $stamp ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="togo__bar">
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+            </div>
 
-                <?php
+            <?php
 
-                $i++;
-
-            }
-
-        }else{
-            return 'invalid';
         }
 
     }

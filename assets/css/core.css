@@ -4,8 +4,19 @@
 }
 .pingblock{
     min-width: 300px;
+    float:left;
+    font-size:14px;
+}
+.placeholder{
+    min-width: 300px;
     margin:0 20px 20px 0;
     float:left;
+    min-height: 200px;
+    border: 1px dashed #ccc;
+    background-color: #eee;
+    background-image: url("../images/712.gif");
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 .pingblock__item{
     padding:20px 35px;
@@ -41,7 +52,7 @@
     background-color: #fff;
     animation-name: togobar;
     /*animation-iteration-count: infinite;*/
-    animation-duration: 60s;
+    animation-duration: 120s;
 }
 @keyframes togobar {
     0% {

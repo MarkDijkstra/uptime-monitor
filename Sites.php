@@ -15,6 +15,7 @@ class Sites
     public function select($id = false)
     {
 
+       // $sites = [];
         if ($id === false) {
             $query  = 'SELECT * FROM sites ORDER BY id';
         } else {

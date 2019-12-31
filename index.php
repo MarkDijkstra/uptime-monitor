@@ -2,9 +2,9 @@
     require_once(__DIR__ . '/monitor.php');
     require_once(__DIR__ . '/sites.php');
 
-$list = array(
-        'Google NL' => 'https://www.google.nl',
-    );
+    $allSites = new Sites;
+    $sites    = $allSites->select();
+    $sites    = json_encode((array)$sites);
 
 ?>
 
@@ -25,27 +25,39 @@ $list = array(
 
     <script>
         $('document').ready(function($){
-            function runCheck(){
-                $('.pingblock').each(function (i) {
-                    $("[data-pingblock=" + i + "]").load(location.href + " [data-pingblock-child=" + i + "]");
-                    //console.log('refresh block :'+ i +' | '+ new Date().toLocaleString());
-                });
+            var sites = <?= $sites?>;
+            for (i=0; i<sites.length; i++) {
+                $('.container').append('<div class="placeholder" data-placeholder-id="'+sites[i]['id']+'">');
             }
-            setInterval(runCheck , 60000);
+
+            function runCheck(){
+                for (i=0; i<sites.length; i++) {
+                    siteId    = sites[i]['id'];
+                    siteTitle = sites[i]['title'];
+                    siteUrl   = sites[i]['url'];
+
+                    (function(siteId){
+                        $.ajax({
+                            url: "/ajax/ajax.block.php",
+                            method: "POST",
+                            cache: false,
+                            dataType: "html",
+                            data: {id: siteId, title: siteTitle, url: siteUrl},
+                            success: function (data) {
+                                $('[data-placeholder-id=' + siteId + ']').html('').append(data);
+                            }
+                        });
+                    })(siteId);
+
+                }
+            }
+            runCheck();
+            setInterval(runCheck , 120000);
         });
     </script>
 
 </head>
 <body>
-    <div class="container">
-        <?php
-            $block = new Monitor;
-            $block->build($list);
-
-
-        $sites = new Sites;
-        print_r($sites->select());
-        ?>
-    </div>
+    <div class="container"></div>
 </body>
 </html>
