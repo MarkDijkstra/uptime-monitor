@@ -23,6 +23,10 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
 
+    <script src="/assets/js/sparklines.min.js"></script>
+
+
+
     <script>
         $('document').ready(function($){
             var sites = <?= $sites?>;
@@ -52,7 +56,7 @@
                 }
             }
             runCheck();
-            setInterval(runCheck , 120000);
+           // setInterval(runCheck , 120000);
         });
     </script>
 

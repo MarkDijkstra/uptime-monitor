@@ -8,13 +8,14 @@ class Monitor
 
     public function __contruct()
     {
-
         $this->build();
-
     }
 
-
-    public function getPage( $url )
+    /**
+     * @param $url
+     * @return mixed
+     */
+    public function getPage($url)
     {
 
         $options = array(
@@ -106,7 +107,6 @@ class Monitor
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
