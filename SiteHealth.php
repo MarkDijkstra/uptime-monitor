@@ -27,4 +27,20 @@ class SiteHealth
 //        return [];
     }
 
+    public function getStats($site_id , $limit = 10)
+    {
+
+        $query  = 'SELECT * FROM site_health WHERE site_id = '.$site_id.' ORDER BY added DESC LIMIT '.$limit;
+
+        $result = $this->db->prepare($query);
+
+        if ($result->execute()) {
+            $output = $result->fetchAll(PDO::FETCH_ASSOC);
+
+            return $output;
+        }
+
+        return [];
+    }
+
 }

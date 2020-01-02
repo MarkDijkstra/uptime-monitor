@@ -1,5 +1,5 @@
 <?php
-    require_once(__DIR__ . '/monitor.php');
+
     require_once(__DIR__ . '/sites.php');
 
     $allSites = new Sites;
@@ -55,21 +55,37 @@
                                 var box = $('[data-id=' + siteId + ']');
 
                                 // reset offline boxes that are back online to there original index
-                                if(placeholder.attr('data-offline') == 1 && box.attr('data-status') == 200){
+                                if(placeholder.attr('data-offline-level') != undefined && box.attr('data-status') == 200){
                                     var indexBox = placeholder.attr('data-index');
                                     var index    = indexBox - 1;
                                     if(indexBox != 0){
                                         $($('[data-placeholder-id=' + siteId + ']')).insertAfter($('[data-index='+index+']'));
                                     }
-                                    placeholder.removeAttr('data-offline');
+                                    placeholder.removeAttr('data-offline-level');
                                 }
 
                                 // push the boxes that are offline to the front of the stack,
                                 // they need to be visible
                                 if(box.attr('data-status') != 200){
-                                    placeholder.attr('data-offline' , 1);
+                                    var dataOffline = placeholder.attr('data-offline-level');
+                                    if(dataOffline == undefined){
+                                        var level = 1;
+                                    }else{
+                                        var currentLevel = dataOffline;
+                                        var level        = parseInt(currentLevel) + 1;
+                                    }
+                                    placeholder.attr('data-offline-level' , level);
                                     $('.container').prepend($('[data-placeholder-id=' + siteId + ']'));
                                 }
+
+                                // visual countdown timer
+                                var start=Date.now(),r=document.getElementById('count-'+siteId);
+                                (function f(){
+                                    var diff=Date.now()-start,ns=(((3e5-diff)/1000)>>0),m=(ns/60)>>0,s=ns-m*60;
+                                    r.textContent=m+':'+((''+s).length>1?'':'0')+s;
+                                    if(diff>(3e5)){start=Date.now()}
+                                    setTimeout(f,1000);
+                                })();
 
                             }
                         });
@@ -78,7 +94,7 @@
                 }
             }
             runCheck();
-            setInterval(runCheck , 120000);
+            setInterval(runCheck , 300000);
         });
     </script>
 

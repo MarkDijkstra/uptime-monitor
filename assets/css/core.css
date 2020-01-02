@@ -19,9 +19,10 @@
     background-repeat: no-repeat;
 }
 .pingblock__item{
-    padding:20px 35px;
+    padding:20px 35px 15px 35px;
     width: calc(100% - 70px);
     float:left;
+    position: relative;
 }
 .status--green{
     background-color: #28b02d;
@@ -31,37 +32,38 @@
     background-color: #bf2424;
     color: #fff;
 }
-.status--orange{
+[data-offline-level="1"] .status--red,
+[data-offline-level="2"] .status--red{
     background-color: darkorange;
     color: #fff;
 }
-.togo__bar{
-    width: 100%;
-    height: 4px;
-    float: left;
-    position: relative;
-    margin-top: 20px;
-    background-color: rgba(255,255,255,0.3);
-}
-.togo__bar span{
-    width: 100%;
-    height: 4px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    background-color: #fff;
-    animation-name: togobar;
-    /*animation-iteration-count: infinite;*/
-    animation-duration: 120s;
-}
-@keyframes togobar {
-    0% {
-        width: 100%;
-    }
-    100% {
-        width: 0;
-    }
-}
+/*.togo__bar{*/
+/*    width: 100%;*/
+/*    height: 3px;*/
+/*    float: left;*/
+/*    position: relative;*/
+/*    margin-top: 20px;*/
+/*    background-color: rgba(255,255,255,0.3);*/
+/*}*/
+/*.togo__bar span{*/
+/*    width: 100%;*/
+/*    height: 3px;*/
+/*    position: absolute;*/
+/*    right: 0;*/
+/*    top: 0;*/
+/*    background-color: #fff;*/
+/*    animation-name: togobar;*/
+/*    !*animation-iteration-count: infinite;*!*/
+/*    animation-duration: 120s;*/
+/*}*/
+/*@keyframes togobar {*/
+/*    0% {*/
+/*        width: 100%;*/
+/*    }*/
+/*    100% {*/
+/*        width: 0;*/
+/*    }*/
+/*}*/
 h3{
     margin : 0 0 20px 0;
 }
@@ -86,4 +88,40 @@ h3{
     font-weight: bold;
 }
 
+.cssbars{
+    width: 100%;
+    float : left;
+    height: 8px;
+    background-color:#fff;
+    margin-top: 20px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+ }
+.cssbars div{
+    width: calc(5% - 4px);
+    float : right;
+    margin:0 2px;
+    background-color: #eee;
+    position: relative;
+    height: 100%;
+    display: flex;
+ }
+.cssbars span{
+    width: 100%;
+    float: left;
+    align-self: flex-end;
+}
 
+
+.countdown{
+    color: #000;
+    float: right;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    text-align: center;
+    line-height: 30px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}

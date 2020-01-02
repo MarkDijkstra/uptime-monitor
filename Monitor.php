@@ -5,9 +5,6 @@ require_once(__DIR__ . '/sitehealth.php');
 class Monitor 
 {
 
-    public $http_code;
-    public $total_time;
-
     public function __contruct()
     {
     }
@@ -51,6 +48,7 @@ class Monitor
     /**
      * @param $id
      * @param $url
+     * @return mixed
      */
     public function check($id, $url)
     {
@@ -60,8 +58,7 @@ class Monitor
         $health = new SiteHealth;
         $health->register($id, $page['http_code']);
 
-        $this->http_code  = $page['http_code'];
-        $this->total_time = $page['total_time'];
+        return $page;
 
     }
 

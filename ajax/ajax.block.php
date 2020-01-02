@@ -11,15 +11,19 @@ if (isset($_POST['id']) && is_numeric($_POST['id']) ) {
     $site  = new Sites;
     $site  = $site->select($_POST['id'])[0];
 
-    $block = new Monitor;
-    $block->check($site['id'], $site['url']);
+    $blocks = new Monitor;
+    $block  = $blocks->check($site['id'], $site['url']);
 
-    $status = $block->http_code == 200 ? 'status--green' : 'status--red';
+    $stats = new SiteHealth;
+    $allStats = $stats->getStats($site['id'] , 20 );
+
+    $status = $block['http_code'] == 200 ? 'status--green' : 'status--red';
 
     ?>
 
-    <div class="pingblock" data-id="<?= $site['id'] ?>" data-status="<?= $block->http_code?>">
+    <div class="pingblock" data-id="<?= $site['id'] ?>" data-status="<?= $block['http_code']?>">
         <div class="pingblock__item <?= $status; ?>">
+            <div class="countdown" id="count-<?= $site['id']?>">120</div>
             <div class="row">
                 <div class="col">
                     <h3>
@@ -36,13 +40,13 @@ if (isset($_POST['id']) && is_numeric($_POST['id']) ) {
             <div class="row">
                 <div class="col bold">Response:</div>
                 <div class="col">
-                    <?= $block->http_code ?>
+                    <?= $block['http_code'] ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col bold">Total Time:</div>
                 <div class="col">
-                    <?= $block->total_time ?>
+                    <?= $block['total_time'] ?>
                 </div>
             </div>
             <div class="row">
@@ -53,9 +57,33 @@ if (isset($_POST['id']) && is_numeric($_POST['id']) ) {
             </div>
             <div class="row">
                 <div class="col">
-                    <div class="togo__bar">
-                        <span></span>
+
+                    <div class="cssbars">
+
+                        <?php
+
+                        foreach($allStats as $key => $value){
+
+                            if($allStats[$key]['status'] == 200){
+                               // $height = '100';
+                                $color   = 'green';
+                            }elseif($allStats[$key]['status'] == 0){
+                               // $height = '20';
+                                $color   = 'red';
+                            }else{
+                                //$height = '50';
+                                $color   = 'orange';
+                            }
+
+                            echo '<div><span style="height: 100%;background:'.$color.'"></span></div>';
+
+                        } ?>
+
                     </div>
+
+<!--                    <div class="togo__bar">-->
+<!--                        <span></span>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
