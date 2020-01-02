@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/connect.php');
 
-class Health
+class SiteHealth
 {
 
     private $db;
@@ -15,7 +15,7 @@ class Health
     public function register($site_id , $status)
     {
 
-        $query  = "INSERT INTO health (site_id , status) VALUES (?,?)";
+        $query  = "INSERT INTO site_health (site_id , status) VALUES (?,?)";
 
         $result = $this->db->prepare($query);
         $result->execute([$site_id , $status]);

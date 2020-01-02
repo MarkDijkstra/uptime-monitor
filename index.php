@@ -23,10 +23,6 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
 
-    <script src="/assets/js/sparklines.min.js"></script>
-
-
-
     <script>
         $('document').ready(function($){
             var sites = <?= $sites?>;
@@ -36,9 +32,7 @@
 
             function runCheck(){
                 for (i=0; i<sites.length; i++) {
-                    siteId    = sites[i]['id'];
-                    siteTitle = sites[i]['title'];
-                    siteUrl   = sites[i]['url'];
+                    siteId = sites[i]['id'];
 
                     (function(siteId){
                         $.ajax({
@@ -46,7 +40,7 @@
                             method: "POST",
                             cache: false,
                             dataType: "html",
-                            data: {id: siteId, title: siteTitle, url: siteUrl},
+                            data: {id: siteId},
                             success: function (data) {
                                 $('[data-placeholder-id=' + siteId + ']').html('').append(data);
                             }
@@ -56,7 +50,7 @@
                 }
             }
             runCheck();
-           // setInterval(runCheck , 120000);
+            setInterval(runCheck , 120000);
         });
     </script>
 

@@ -19,16 +19,20 @@ class Sites
         if ($id === false) {
             $query  = 'SELECT * FROM sites ORDER BY id';
         } else {
-            $query  = 'SELECT * FROM sites WHERE id = '.$id. ' ORDER BY id';
+            $query  = 'SELECT * FROM sites WHERE id = '.$id;
         }
+
         $result = $this->db->prepare($query);
+
         if ($result->execute()) {
 
             $output = $result->fetchAll(PDO::FETCH_ASSOC);
             //return json_encode($output);
             return $output;
         }
+
         return [];
+
     }
 
 }
