@@ -57,7 +57,6 @@ class Monitor
 
         $page = $this->checkPage($url);
 
-         // register status
         $health = new SiteHealth;
         $health->register($id, $page['http_code']);
 

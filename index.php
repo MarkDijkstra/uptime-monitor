@@ -26,12 +26,17 @@
     <script>
         $('document').ready(function($){
             var sites = <?= $sites?>;
+
+            // build the containers
+            // if site fails to load it will show an empty container
             for (i=0; i<sites.length; i++) {
-                $('.container').append('<div class="placeholder" data-placeholder-id="'+sites[i]['id']+'">');
+                $('.container').append('<div class="placeholder" data-placeholder-id="'+sites[i]['id']+'" data-index="'+i+'">');
             }
 
+            // run and display the site
             function runCheck(){
                 for (i=0; i<sites.length; i++) {
+
                     siteId = sites[i]['id'];
 
                     (function(siteId){
@@ -42,7 +47,30 @@
                             dataType: "html",
                             data: {id: siteId},
                             success: function (data) {
-                                $('[data-placeholder-id=' + siteId + ']').html('').append(data);
+
+                                var placeholder = $('[data-placeholder-id=' + siteId + ']');
+
+                                placeholder.html('').append(data);
+
+                                var box = $('[data-id=' + siteId + ']');
+
+                                // reset offline boxes that are back online to there original index
+                                if(placeholder.attr('data-offline') == 1 && box.attr('data-status') == 200){
+                                    var indexBox = placeholder.attr('data-index');
+                                    var index    = indexBox - 1;
+                                    if(indexBox != 0){
+                                        $($('[data-placeholder-id=' + siteId + ']')).insertAfter($('[data-index='+index+']'));
+                                    }
+                                    placeholder.removeAttr('data-offline');
+                                }
+
+                                // push the boxes that are offline to the front of the stack,
+                                // they need to be visible
+                                if(box.attr('data-status') != 200){
+                                    placeholder.attr('data-offline' , 1);
+                                    $('.container').prepend($('[data-placeholder-id=' + siteId + ']'));
+                                }
+
                             }
                         });
                     })(siteId);

@@ -18,7 +18,7 @@ if (isset($_POST['id']) && is_numeric($_POST['id']) ) {
 
     ?>
 
-    <div class="pingblock" data-id="<?= $site['id'] ?>">
+    <div class="pingblock" data-id="<?= $site['id'] ?>" data-status="<?= $block->http_code?>">
         <div class="pingblock__item <?= $status; ?>">
             <div class="row">
                 <div class="col">
