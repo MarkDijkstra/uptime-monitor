@@ -1,9 +1,11 @@
 <?php
 
     require_once(__DIR__ . '/sites.php');
+require_once(__DIR__ . '/sitehealth.php');
 
     $allSites = new Sites;
     $sites    = $allSites->select();
+    $data     = $sites;
     $sites    = json_encode((array)$sites);
 
 ?>
@@ -30,7 +32,7 @@
             // build the containers
             // if site fails to load it will show an empty container
             for (i=0; i<sites.length; i++) {
-                $('.container').append('<div class="placeholder" data-placeholder-id="'+sites[i]['id']+'" data-index="'+i+'">');
+                $('#blocks').append('<div class="placeholder" data-placeholder-id="'+sites[i]['id']+'" data-index="'+i+'">');
             }
 
             // run and display the site
@@ -100,6 +102,45 @@
 
 </head>
 <body>
-    <div class="container"></div>
+    <div class="container">
+        <div id="blocks"></div>
+    </div>
+
+    <hr class="line"/>
+
+    <?php foreach($data as $item){?>
+        <div class="stats__block">
+            <div class="stats__title">
+                <?= $item['title'];?>
+            </div>
+            <div class="stats__data">
+                <div class="cssbars">
+                    <?php
+
+                    $stats = new SiteHealth;
+                    $allStats = $stats->getStats($item['id'] , 25 );
+
+                    foreach($allStats as $key => $value){
+
+                        if($allStats[$key]['status'] == 200){
+                            $height = '100';
+                            $color   = 'green';
+                        }elseif($allStats[$key]['status'] == 0){
+                            $height = '20';
+                            $color   = 'red';
+                        }else{
+                            $height = '50';
+                            $color   = 'orange';
+                        }
+
+                        echo '<div><span style="height: '.$height.'%;background:'.$color.'"></span></div>';
+
+                    } ?>
+
+                </div>
+            </div>
+        </div>
+    <?php }?>
+
 </body>
 </html>

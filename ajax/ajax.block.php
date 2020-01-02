@@ -14,9 +14,6 @@ if (isset($_POST['id']) && is_numeric($_POST['id']) ) {
     $blocks = new Monitor;
     $block  = $blocks->check($site['id'], $site['url']);
 
-    $stats = new SiteHealth;
-    $allStats = $stats->getStats($site['id'] , 20 );
-
     $status = $block['http_code'] == 200 ? 'status--green' : 'status--red';
 
     ?>
@@ -57,29 +54,6 @@ if (isset($_POST['id']) && is_numeric($_POST['id']) ) {
             </div>
             <div class="row">
                 <div class="col">
-
-                    <div class="cssbars">
-
-                        <?php
-
-                        foreach($allStats as $key => $value){
-
-                            if($allStats[$key]['status'] == 200){
-                               // $height = '100';
-                                $color   = 'green';
-                            }elseif($allStats[$key]['status'] == 0){
-                               // $height = '20';
-                                $color   = 'red';
-                            }else{
-                                //$height = '50';
-                                $color   = 'orange';
-                            }
-
-                            echo '<div><span style="height: 100%;background:'.$color.'"></span></div>';
-
-                        } ?>
-
-                    </div>
 
 <!--                    <div class="togo__bar">-->
 <!--                        <span></span>-->
