@@ -52,14 +52,6 @@ if (isset($_POST['id']) && is_numeric($_POST['id']) ) {
                     <?= $stamp ?>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-
-<!--                    <div class="togo__bar">-->
-<!--                        <span></span>-->
-<!--                    </div>-->
-                </div>
-            </div>
         </div>
     </div>
 

@@ -1,7 +1,7 @@
 <?php
 
     require_once(__DIR__ . '/sites.php');
-require_once(__DIR__ . '/sitehealth.php');
+    require_once(__DIR__ . '/sitehealth.php');
 
     $allSites = new Sites;
     $sites    = $allSites->select();
