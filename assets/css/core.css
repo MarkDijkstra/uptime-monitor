@@ -1,17 +1,21 @@
+body{
+    padding:0;
+    margin: 0;
+}
 .container{
-    width: 100%;
     float: left;
+    padding: 10px 0 0 10px;
 }
 .pingblock{
-    min-width: 300px;
+    width: 306px;
     float:left;
     font-size:14px;
 }
 .placeholder{
-    min-width: 300px;
+    width: 306px;
     margin:0 10px 10px 0;
     float:left;
-    min-height: 160px;
+    min-height: 166px;
     border: 1px dashed #ccc;
     background-color: #eee;
     background-image: url("../images/712.gif");
@@ -61,46 +65,45 @@ h3{
     font-weight: bold;
 }
 
-.stats__block{
+
+
+.heatmap{
+    margin-bottom : 60px;
+    float: left;
+}
+.css_heatmap__row{
     width: 100%;
     float: left;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #999;
+    margin-bottom: 2px;
 }
-.stats__title{
-    width: 30%;
+.css_heatmap__title{
+    width: calc(30% - 15px);
     float: left;
-    line-height: 34px;
-    font-weight: bold;
+    line-height: 24px;
+    text-align: right;
+    padding-right: 15px;
+    font-size: 12px;
 }
-.stats__data{
+.css_heatmap__wrapper{
     width: 70%;
     float: left;
 }
-.cssbars{
-    width: calc(100% - 4px);
+.css_heatmap__blocks{
+    width: 600px;
     float : left;
-    height: 30px;
-    background-color:#fff;
-    padding: 2px 1px;
-    border: 1px solid #999;
-    border-top: none;
+    height: 24px;
  }
-.cssbars div{
-    width: calc(4% - 4px);
-    float : right;
-    margin:0 2px;
-    background-color: #eee;
+.css_heatmap__blocks div{
+    width: calc(4.16% - 2px);
+    float : left;
     position: relative;
     height: 100%;
-    display: flex;
+    margin: 1px;
  }
-.cssbars span{
-    width: 100%;
-    float: left;
-    align-self: flex-end;
-}
+
+
+
+
 .countdown{
     color: #000;
     background-color: #fff;
