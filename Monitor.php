@@ -2,12 +2,11 @@
 
 require_once(__DIR__ . '/sitehealth.php');
 
+/**
+ * Class Monitor
+ */
 class Monitor 
 {
-
-    public function __contruct()
-    {
-    }
 
     /**
      * @param $url
@@ -53,10 +52,10 @@ class Monitor
     public function check($id, $url)
     {
 
-        $page = $this->checkPage($url);
-
+        $page   = $this->checkPage($url);
         $health = new SiteHealth;
-        $health->register($id, $page['http_code']);
+
+        $health->register($id, $page['http_code'] , $page['total_time'] , $page['redirect_time']);
 
         return $page;
 

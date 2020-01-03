@@ -2,31 +2,43 @@
 
 require_once(__DIR__ . '/connect.php');
 
+/**
+ * Class SiteHealth
+ */
 class SiteHealth
 {
 
     private $db;
 
+    /**
+     * SiteHealth constructor.
+     */
     public function __construct()
     {
         $this->db = new Connect;
     }
 
-    public function register($site_id , $status)
+    /**
+     * @param $site_id
+     * @param $status
+     * @param $total_time
+     * @param $redirect_time
+     */
+    public function register($site_id , $status , $total_time , $redirect_time)
     {
 
-        $query  = "INSERT INTO site_health (site_id , status) VALUES (?,?)";
-
+        $query  = "INSERT INTO site_health (site_id, status, total_time, redirect_time) VALUES (?,?,?,?)";
         $result = $this->db->prepare($query);
-        $result->execute([$site_id , $status]);
 
-//            $output = $result->fetchAll(PDO::FETCH_ASSOC);
-//            //return json_encode($output);
-//            return $output;
+        $result->execute([$site_id , $status, $total_time , $redirect_time]);
 
-//        return [];
     }
 
+    /**
+     * @param $site_id
+     * @param int $limit
+     * @return array
+     */
     public function getStats($site_id , $limit = 10)
     {
 
@@ -40,7 +52,6 @@ class SiteHealth
             return $output;
         }
 
-        return [];
     }
 
 }

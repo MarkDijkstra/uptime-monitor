@@ -2,20 +2,29 @@
 
 require_once(__DIR__ . '/connect.php');
 
+/**
+ * Class Sites
+ */
 class Sites
 {
 
     private $db;
 
+    /**
+     * Sites constructor.
+     */
     public function __construct()
     {
         $this->db = new Connect;
     }
 
+    /**
+     * @param bool $id
+     * @return array
+     */
     public function select($id = false)
     {
 
-       // $sites = [];
         if ($id === false) {
             $query  = 'SELECT * FROM sites ORDER BY id';
         } else {
@@ -27,11 +36,9 @@ class Sites
         if ($result->execute()) {
 
             $output = $result->fetchAll(PDO::FETCH_ASSOC);
-            //return json_encode($output);
+
             return $output;
         }
-
-        return [];
 
     }
 
